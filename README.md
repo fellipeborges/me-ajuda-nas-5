@@ -3,6 +3,7 @@ Te ajuda a descobrir a palavra do dia no Termo, Letreco, Palavrês e similares.
 
 ## Demo
 - [https://meajudanas5.netlify.app](https://meajudanas5.netlify.app)
+![Resolvendo o Letreco](util/gifs/solving-letreco.gif)
 
 ## Rodar localmente com servidor web nodejs
 - Instale o http-server digitando `npm install -g http-server`
