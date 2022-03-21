@@ -1,0 +1,115 @@
+﻿<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Me ajuda nas 5</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/site.css" />
+    <script src="scripts/lib/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app" v-cloak class="container">
+
+        <div class="box">
+
+            <!-- Instructions -->
+            <p class="instructions">Clique na letra para mudar de cor</p>
+
+            <!-- Letters -->
+            <table class="table-letters">
+                <tbody>
+                    <tr v-for="attempt in this.attempts" :key="attempt.number">
+                        <td v-for="letter in attempt.letters"
+                            :key="letter.position"
+                            v-bind:class="getCssColor(letter)"
+                            @click="changeColor(letter); check();">
+                            {{letter.letter}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Keyboard -->
+            <table class="table-keyboard" style="font-size:0.8em">
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="lettersMayRepeat" v-model="settings.lettersMayRepeat" v-on:click="check();">
+                            <label for="lettersMayRepeat">Letras podem repetir<span title="Exemplos: Termo e Palavrês repetem, Letreco não.">❔</span></label>
+                        </td>
+                        <td v-on:click="backspace(); check();">⬅ Backspace</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table-keyboard">
+                <tbody>
+                    <tr>
+                        <td v-for="letter in keyboard.firstRow"
+                            :key="letter"
+                            @click="useLetter(letter); check();">
+                            {{letter}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table-keyboard">
+                <tbody>
+                    <tr>
+                        <td v-for="letter in keyboard.secondRow"
+                            :key="letter"
+                            @click="useLetter(letter); check();">
+                            {{letter}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table-keyboard">
+                <tbody>
+                    <tr>
+                        <td v-for="letter in keyboard.thirdRow"
+                            :key="letter"
+                            @click="useLetter(letter); check();">
+                            {{letter}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Suggestions -->
+            <div class="suggestions">
+                <div v-if="guessedCorrectly">
+                    <span class="emoji">😎</span>
+                </div>
+                <div v-else>
+                    <p>Próximas palavras sugeridas:</p>
+                    <br />
+
+                    <span v-for="(suggestion, index) in nextSuggestedWords" :key="suggestion.word" class="suggestion">
+
+                        <span v-on:click="useWord(suggestion.word); check();" v-bind:style="getFontSizePercentage(index)">
+                            <span v-if="index > 0"> » </span>
+                            {{suggestion.word}}
+                        </span>
+                        <span v-if="settings.showScore" class="score">{{suggestion.score | formatScore}}</span>
+                    </span>
+
+                    <span v-if="nextSuggestedWords.length == 0">
+                        Nenhuma<br />
+                        <span class="emoji">😦</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <!-- Footer -->
+            <div class="footer">
+                Desenvolvido por <a href="https://www.linkedin.com/in/fellipeborges/" target="_blank" title="LinkedIn de Fellipe Borges">Fellipe Borges</a> |
+                <a href="https://github.com/fellipeborges/wordleguesser" target="_blank" title="Código fonte no Github">Código fonte</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="scripts/wgApp.js"></script>
+</body>
+</html>
